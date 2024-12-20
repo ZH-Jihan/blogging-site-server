@@ -20,6 +20,9 @@ const userSchema = new Schema<TUser, TUserModel>(
       required: true,
       select: 0,
     },
+    passwordResetTime: {
+      type: Date,
+    },
     role: {
       type: String,
       enum: ['admin', 'user'],
@@ -76,6 +79,14 @@ userSchema.statics.generateRefreshToken = function (userData) {
   return Jwt.sign(userData, config.refresh_secret as string, {
     expiresIn: config.refresh_expires_in,
   });
+};
+
+// compare passwort reset timestamp with token issue time to validate access token
+userSchema.statics.checkTokenWithPasswordResetTime = async function (
+  passwordResetTime,
+  tokenIssue,
+) {
+  return passwordResetTime > tokenIssue;
 };
 
 export const User = model<TUser, TUserModel>('User', userSchema);

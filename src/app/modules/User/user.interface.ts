@@ -7,6 +7,7 @@ export interface TUser {
   email: string;
   password: string;
   role: TUserRole;
+  passwordResetTime?: Date;
   isBlocked: boolean;
 }
 
@@ -15,4 +16,8 @@ export interface TUserModel extends Model<TUser> {
   isPasswordMatch(inputPassword: string, dbPassword: string): Promise<boolean>;
   generateAccessToken(userData: object): Promise<string>;
   generateRefreshToken(userData: object): Promise<string>;
+  checkTokenWithPasswordResetTime(
+    passwordResetTime: number,
+    tokenIssue: number,
+  ): Promise<boolean>;
 }
