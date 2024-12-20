@@ -14,7 +14,7 @@ export interface TUser {
 export interface TUserModel extends Model<TUser> {
   isUserExists(email: string): Promise<TUser>;
   isPasswordMatch(inputPassword: string, dbPassword: string): Promise<boolean>;
-  generateAccessToken(userData: object): Promise<string>;
+  generateAccessToken(email: string): Promise<string>;
   generateRefreshToken(userData: object): Promise<string>;
   checkTokenWithPasswordResetTime(
     passwordResetTime: number,

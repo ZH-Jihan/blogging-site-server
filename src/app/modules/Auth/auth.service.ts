@@ -39,7 +39,7 @@ const loginUserInBD = async (payload: TLogin) => {
     role: user.role,
     name: user.name,
   };
-  const accessToken = await User.generateAccessToken(jwtPayload);
+  const accessToken = await User.generateAccessToken(user?.email);
   const refreshToken = await User.generateRefreshToken(jwtPayload);
 
   return { accessToken, refreshToken };

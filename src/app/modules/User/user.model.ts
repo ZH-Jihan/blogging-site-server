@@ -68,14 +68,24 @@ userSchema.statics.isPasswordMatch = async function (
 };
 
 // Generate access token
-userSchema.statics.generateAccessToken = function (userData) {
-  return Jwt.sign(userData, config.access_secret as string, {
-    expiresIn: config.access_expires_in,
-  });
+userSchema.statics.generateAccessToken = async function (email: string) {
+  const user = await User.findOne({ email: email });
+  return Jwt.sign(
+    {
+      id: user?._id,
+      name: user?.name,
+      email: user?.email,
+      role: user?.role,
+    },
+    config.access_secret as string,
+    {
+      expiresIn: config.access_expires_in,
+    },
+  );
 };
 
 // Generate refresh token
-userSchema.statics.generateRefreshToken = function (userData) {
+userSchema.statics.generateRefreshToken = async function (userData) {
   return Jwt.sign(userData, config.refresh_secret as string, {
     expiresIn: config.refresh_expires_in,
   });
