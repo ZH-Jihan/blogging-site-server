@@ -4,6 +4,7 @@ import ApiResponse from '../../utils/ApiResponse';
 import asyncHandler from '../../utils/asyncHandaler';
 import { AuthServices } from './auth.service';
 
+// Register a new user into database
 const regesterUser = asyncHandler(async (req, res) => {
   const { _id, name, email } = await AuthServices.regesterUserIntoDB(req.body);
 
@@ -14,7 +15,7 @@ const regesterUser = asyncHandler(async (req, res) => {
   });
 });
 
-// Login user
+// Login user and set refresh token to cookie
 const loginUser = asyncHandler(async (req, res) => {
   const { accessToken, refreshToken } = await AuthServices.loginUserInBD(
     req.body,
@@ -26,6 +27,7 @@ const loginUser = asyncHandler(async (req, res) => {
     secure: config.NODE_ENV === 'production',
   });
 
+  // Send Access token in response to user
   ApiResponse(res, {
     statusCode: httpStatus.OK,
     message: 'Login successful',

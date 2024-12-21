@@ -1,14 +1,35 @@
 import httpStatus from 'http-status';
 import { JwtPayload } from 'jsonwebtoken';
+import QueryBuilder from '../../bulilder/QueryBuilder';
 import ApiError from '../../utils/ApiError';
 import { TBlog } from './blog.interface';
 import { Blog } from './blog.model';
 
+// Post new blog into database
 const postNewBlogIntoDB = async (userData: JwtPayload, payload: TBlog) => {
   payload.author = userData.id;
   const newBlog = await (await Blog.create(payload)).populate('author');
+  // Destructuring data for Return only required fields
   const { _id, title, content, author } = newBlog;
   return { _id, title, content, author };
+};
+
+// Get all published blogs from database
+const getAllBlogFromDB = async (query: Record<string, unknown>) => {
+  const searchingFields = ['title', 'content'];
+  const allBlogQuery = new QueryBuilder(
+    Blog.find().populate('author').select('-isPublished -createdAt -updatedAt'),
+    query,
+  )
+    .search(searchingFields)
+    .filter()
+    .sortBy()
+    .paginate()
+    .fields();
+
+  const allBlog = await allBlogQuery.modelQuery;
+
+  return allBlog;
 };
 
 // Update blog content
@@ -76,4 +97,5 @@ export const BlogServices = {
   postNewBlogIntoDB,
   updateBlogByIdIntoDB,
   deletedBlogFronDB,
+  getAllBlogFromDB,
 };

@@ -6,9 +6,9 @@ import { AdminServices } from './admin.service';
 
 const blockUserByAdmin = asyncHandler(async (req, res) => {
   const { userId } = req.params;
-  console.log(req.params);
-
   const result = await AdminServices.blockUserByAdminInDB(userId);
+
+  // Check if user is blocked successfully or not
   if (result?._id) {
     ApiResponse(res, {
       statusCode: httpStatus.OK,

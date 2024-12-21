@@ -4,6 +4,18 @@ import ApiResponse from '../../utils/ApiResponse';
 import asyncHandler from '../../utils/asyncHandaler';
 import { BlogServices } from './blog.service';
 
+// Get all blogs
+const getAllBlog = asyncHandler(async (req, res) => {
+  const result = await BlogServices.getAllBlogFromDB(req.query);
+
+  ApiResponse(res, {
+    statusCode: httpStatus.OK,
+    message: 'Blogs fetched successfully',
+    data: result,
+  });
+});
+
+// Post a new blog from database
 const postNewBlog = asyncHandler(async (req, res) => {
   const result = await BlogServices.postNewBlogIntoDB(req.user, req.body);
 
@@ -46,4 +58,4 @@ const deleteBlogUsingId = asyncHandler(async (req, res) => {
   }
 });
 
-export { deleteBlogUsingId, postNewBlog, updateBlogUseingId };
+export { deleteBlogUsingId, getAllBlog, postNewBlog, updateBlogUseingId };

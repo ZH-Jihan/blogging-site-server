@@ -25,4 +25,10 @@ const blogSchema = new Schema<TBlog>(
   },
 );
 
+// Check if blog is published or not
+blogSchema.pre('find', function (next) {
+  this.find({ isPublished: { $eq: true } });
+  next();
+});
+
 export const Blog = model<TBlog>('Blog', blogSchema);
