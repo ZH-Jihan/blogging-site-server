@@ -25,6 +25,6 @@ router
     ValidateRequestData(BlogValidationSchema.updateBlogValidationSchema),
     updateBlogUseingId,
   )
-  .delete(auth('admin', 'user'), deleteBlogUsingId);
+  .delete(auth('user'), deleteBlogUsingId);
 
 export const BlogRoutes = router;
