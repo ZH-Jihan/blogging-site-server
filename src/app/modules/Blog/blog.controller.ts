@@ -1,4 +1,5 @@
 import httpStatus from 'http-status';
+import ApiError from '../../utils/ApiError';
 import ApiResponse from '../../utils/ApiResponse';
 import asyncHandler from '../../utils/asyncHandaler';
 import { BlogServices } from './blog.service';
@@ -28,4 +29,21 @@ const updateBlogUseingId = asyncHandler(async (req, res) => {
   });
 });
 
-export { postNewBlog, updateBlogUseingId };
+// Delete blog using id
+const deleteBlogUsingId = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const result = await BlogServices.deletedBlogFronDB(id, req.user);
+  if (result?._id) {
+    ApiResponse(res, {
+      statusCode: httpStatus.OK,
+      message: 'Blog deleted successfully',
+    });
+  } else {
+    throw new ApiError(
+      httpStatus.EXPECTATION_FAILED,
+      'Blog not deleted somthing wrong',
+    );
+  }
+});
+
+export { deleteBlogUsingId, postNewBlog, updateBlogUseingId };

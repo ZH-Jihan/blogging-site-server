@@ -49,7 +49,31 @@ const updateBlogByIdIntoDB = async (
   return { _id, title, content, author };
 };
 
+// Delete blog from database
+const deletedBlogFronDB = async (id: string, userData: JwtPayload) => {
+  // find blog by id
+  const blog = await Blog.findById(id);
+
+  // Throw not found error when blog not found
+  if (!blog) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Blog not found');
+  }
+
+  // Check user is author Or admin if not then throw unauthorized error
+  if (userData.role !== 'admin' && blog?.author.toString() !== userData?.id) {
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      'You are not authorized to delete this blog',
+    );
+  }
+
+  // Delete blog from database
+  const deletedBlog = await Blog.findByIdAndDelete(id);
+  return deletedBlog;
+};
+
 export const BlogServices = {
   postNewBlogIntoDB,
   updateBlogByIdIntoDB,
+  deletedBlogFronDB,
 };
