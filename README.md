@@ -45,12 +45,11 @@ https://bloging-server-two.vercel.app
 
 ### Registering an Account & Logging In
 
-* Method POST
 ```http
- /api/auth/register
+ POST /api/auth/register
 ```
 ```http
- /api/auth/login
+ POST /api/auth/login
 ```
 
 ### Need Information to register & login
@@ -61,10 +60,8 @@ https://bloging-server-two.vercel.app
 | `email`      | `string` | **Required**|
 | `password`      | `string` | **Required**|
 * Login 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `email`      | `string` | **Required**|
-| `password`      | `string` | **Required**|
+ `email` :    string  
+ `password` : string
 
 Upon successful login, you will receive a JWT token that you need to use when performing actions like creating or updating blogs.
 
