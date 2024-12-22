@@ -72,15 +72,18 @@ Upon successful login, you will receive a JWT token that you need to use when pe
 
 
 ## Error Handling
-
 The system ensures that errors are handled gracefully with consistent error responses across all endpoints. The structure of error responses is as follows:
-
 * ### Types of Errors Handled:
 `Zod Validation Error (ZOD_ERROR)`: Invalid input based on Zod schema.
+
 `Not Found Error (NOT_FOUND_ERROR)`: When a resource is not found.
+
 `Validation Error (VALIDATION_ERROR)`: Incorrect data format or missing fields.
+
 `Authentication Error (AUTH_ERROR)`: Invalid token or expired session.
+
 `Authorization Error (AUTHORIZATION_ERROR)`: Insufficient permissions.
+
 `Internal Server Error (INTERNAL_SERVER_ERROR)`: Unhandled errors.
 
 ## Run Locally
