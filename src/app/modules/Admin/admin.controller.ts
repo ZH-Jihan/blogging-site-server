@@ -5,6 +5,8 @@ import asyncHandler from '../../utils/asyncHandaler';
 import { AdminServices } from './admin.service';
 
 const blockUserByAdmin = asyncHandler(async (req, res) => {
+  console.log(req.user);
+
   const { userId } = req.params;
   const result = await AdminServices.blockUserByAdminInDB(userId);
 
