@@ -81,7 +81,7 @@ The system ensures that errors are handled gracefully with consistent error resp
 `Validation Error (VALIDATION_ERROR)`: Incorrect data format or missing fields.
 `Authentication Error (AUTH_ERROR)`: Invalid token or expired session.
 `Authorization Error (AUTHORIZATION_ERROR)`: Insufficient permissions.
-Internal Server Error `(INTERNAL_SERVER_ERROR)`: Unhandled errors.
+`Internal Server Error (INTERNAL_SERVER_ERROR)`: Unhandled errors.
 
 ## Run Locally
 
