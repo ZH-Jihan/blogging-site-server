@@ -1,4 +1,3 @@
-
 # Blog Platform
 
 Welcome to the Blog Platform! This platform allows users to create, manage, and share blogs. The platform provides different functionalities for both regular users and admins. This guide will help you understand how to interact with the system as a user.
@@ -42,46 +41,68 @@ https://bloging-server-two.vercel.app
 
 
 ## API Endpoints for Users
+#### 1.  Registering an Account
+Before you can start creating or managing blogs, you need to register on the platform.
 
-### Registering an Account & Logging In
+##### URL: /api/auth/register
+- `Method`: POST
+- `Request`: Your name, Email address, A password
 
-```http
- POST /api/auth/register
-```
-```http
- POST /api/auth/login
-```
+Once registered, you will receive a success message with your user details.
 
-### Need Information to register & login
-* Register 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `name`      | `string` | **Required**|
-| `email`      | `string` | **Required**|
-| `password`      | `string` | **Required**|
-* Login 
- `email` :    string  
- `password` : string
+#### 2.  Logging In
+Once you are registered, you need to log in to your account to start using the platform.
+
+##### URL: /api/auth/login
+- `Method`: POST
+- `Request`: Your email and password
 
 Upon successful login, you will receive a JWT token that you need to use when performing actions like creating or updating blogs.
+
+### 3.  Creating a Blog
+When logged in, you can create a blog by providing a title and content.
+
+##### URL: /api/blogs
+- `Method`: POST
+- `Request`: Blog title and content
+
+If successful, you will receive a confirmation message with your newly created blog.
+
+#### 4. Updating a Blog
+You can edit any of your blogs, changing the title or content.
+
+##### URL: /api/blogs/:id
+- `Method`: PATCH
+- `Request`: The ID of the blog you want to update. New title or content. You can only update blogs you have created.
+
+#### 5. Deleting a Blog
+If you no longer want to keep a blog, you can delete it.
+
+##### URL: /api/blogs/:id
+- `Method`: DELETE
+You will need to provide the ID of the blog you wish to delete. Only the blog's author can delete it.
+
+#### 6. Viewing Blogs
+The platform offers a way for everyone (whether logged in or not) to read the blogs that have been posted. You can search, sort, and filter blogs based on different parameters.
+
+#####URL: /api/blogs
+- `Method`: GET
+You can search for blogs by title or content, sort them by creation date or title, and filter them by the author.
 
 
 
 
 ## Error Handling
+
 The system ensures that errors are handled gracefully with consistent error responses across all endpoints. The structure of error responses is as follows:
+
 * ### Types of Errors Handled:
 `Zod Validation Error (ZOD_ERROR)`: Invalid input based on Zod schema.
-
 `Not Found Error (NOT_FOUND_ERROR)`: When a resource is not found.
-
 `Validation Error (VALIDATION_ERROR)`: Incorrect data format or missing fields.
-
 `Authentication Error (AUTH_ERROR)`: Invalid token or expired session.
-
 `Authorization Error (AUTHORIZATION_ERROR)`: Insufficient permissions.
-
-`Internal Server Error (INTERNAL_SERVER_ERROR)`: Unhandled errors.
+Internal Server Error `(INTERNAL_SERVER_ERROR)`: Unhandled errors.
 
 ## Run Locally
 
@@ -140,4 +161,3 @@ Happy blogging! 😊
 ## Authors
 
 - [@ZH-Jihan](https://www.facebook.com/mdjakir.hossen.560)
-
