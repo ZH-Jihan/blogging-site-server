@@ -8,7 +8,9 @@ import asyncHandler from '../utils/asyncHandaler';
 
 const auth = (...roles: TUserRole[]) => {
   return asyncHandler(async (req, res, next) => {
-    const token = req?.headers?.authorization;
+    const token = req?.headers?.authorization?.startsWith('Bearer ')
+      ? req.headers.authorization.replace('Bearer ', '').trim()
+      : null;
 
     // Check token is present in the request
     if (!token) {
